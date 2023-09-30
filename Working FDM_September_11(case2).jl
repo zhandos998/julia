@@ -16,12 +16,31 @@ const Nx₁, Nx₂ = 400, 400
 const LastTimeLayer = 100000
 
 # Media properties
-const ρ₀sf_porous = 1500.0
-const ρ₀lf_porous = 1000.0
-const cp₁_porous = 2100.0
-const cp₂_porous = 500.0
-const cs_porous = 1400.0
-const d₀_porous = 0.2
+# const ρ₀sf_porous = 1500.0
+# const ρ₀lf_porous = 1000.0
+# const cp₁_porous = 2100.0
+# const cp₂_porous = 500.0
+# const cs_porous = 1400.0
+# const d₀_porous = 0.2
+
+
+args = ARGS
+println(args)
+
+# Media properties
+const ρ₀sf_porous = parse(Float64, args[1])
+const ρ₀lf_porous = parse(Float64, args[2])
+const cp₁_porous = parse(Float64, args[3])
+const cp₂_porous = parse(Float64, args[4])
+const cs_porous = parse(Float64, args[5])
+const d₀_porous = parse(Float64, args[6])
+
+println(ρ₀sf_porous)
+println(ρ₀lf_porous)
+println(cp₁_porous)
+println(cp₂_porous)
+println(cs_porous)
+println(d₀_porous)
 
 
 const h₁, h₂ = (Bx₁ - Ax₁) / Nx₁, (Bx₂ - Ax₂) / Nx₂
@@ -329,4 +348,4 @@ function Start()
 end
 print(τ)
 
-Start()
+# Start()

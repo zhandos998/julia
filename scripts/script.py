@@ -1,34 +1,57 @@
 import pyvista as pv
 import pandas as pd
 import os
-import video 
+# from .video import record_video
+from video import record_video
 
-project_path = 'C:/github_repositories/medicine/julia/'
-
-plotter = pv.Plotter()
-# plotter = pv.Plotter(off_screen=True)
-def plotting(csv_path,image_path,first = False):
+def plotting(csv_path,image_path,point_cloud,plotter,max,first = False, method = 'u'):
     data = pd.read_csv(csv_path)
-    point_cloud = pv.PolyData()
-    point_cloud.points = data[['x1', 'x2', 'u']].values
-    point_cloud['u'] = data['u'].values
+    point_cloud.points = data[['x1', 'x2', method]].values
+    point_cloud[method] = data[method].values
     delaunay = point_cloud.delaunay_2d()
-    plotter.add_mesh(delaunay, scalars='u', cmap='jet')
-    # if first:
-    plotter.camera_position = 'xy'
-    plotter.camera.roll=180
-    plotter.show(auto_close=False, interactive=False,screenshot=image_path)
+    plotter.add_mesh(delaunay, color='blue', scalars=method, cmap='jet', clim=[0, max])
+    if first:
+        plotter.camera_position = 'xy'
+        plotter.camera.roll=180
+    text_position = (0.0, 0.0, 1.0)
+    text = csv_path.strip('.')[-2]
+    plotter.add_text(text, position=text_position, font_size=24, color='red')
+    plotter.screenshot(image_path)
     return image_path
 
-# plotting(project_path+'data/data.0.csv',project_path+'frames2/frame_0.jpeg',True)
-frames=[]
+def max_value_u(project_path,method='u'):
+    m = 0
+    for i in range(0000,100001,1000):
+        file_path = '/data/data.{}.csv'.format(i)
+        # print(project_path + file_path)
+        if os.path.isfile(os.path.join(project_path, file_path)):
+            data = pd.read_csv(project_path + file_path)
+            m = max(data[method].max(),m)
+    return m
 
-t = 0
-# for i in range(0000,100001,1000):
-for i in range(0000+10000*t,10001+10000*t,1000):
-    file_path = 'data/data.{}.csv'.format(i)
-    print(file_path)
-    if os.path.isfile(os.path.join(project_path, file_path)):
-        frames.append(plotting(project_path + file_path, project_path +'frames2/frame_{}.jpeg'.format(i)))        
+def generate(method='u'):
+    project_path = os.getcwd()
+    plotter = pv.Plotter(off_screen=True)
+    # plotter.open_movie(project_path + 'output_video.mp4')  
 
-video.record_video(image_folder='C:/github_repositories/medicine/julia/frames2/',fps=5,video_name='output_video2.mp4',images=frames)
+    point_cloud = pv.PolyData()
+    frames=[]
+    first = True
+    t=5
+    max_u = max_value_u(project_path,method = method)
+    # for i in range(0000,100001,1000):
+    for i in range(0000+10000*t,10001+10000*t,1000):
+        file_path = '/data/data.{}.csv'.format(i)
+        print(file_path)
+        if os.path.isfile(os.path.join(project_path, file_path)):
+            frames.append(plotting(project_path + file_path, project_path +'/frames/frame_{}.jpeg'.format(i),point_cloud,plotter,max_u,first=first,method = method))
+            first=False
+    plotter.close()
+
+    record_video(image_folder=project_path+'/frames/',fps=5,video_name=project_path + '/output_video_{}.mp4'.format(method),images=frames)
+    # record_video(image_folder=project_path+'/frames/',fps=5,video_name=project_path + 'output_video_{}.mp4'.format(method),images=frames)
+    return '/static/output_video_{}.mp4'.format(method)
+
+if __name__=='__main__':
+    print(os.getcwd())
+    generate(method='u')

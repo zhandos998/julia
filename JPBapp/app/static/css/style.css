@@ -1,0 +1,12 @@
+/* #my-video{
+    width: 100%;
+}
+.video-js .vjs-tech{
+    height: 100%;
+} */
+.vjs-picture-in-picture-control{
+    display: none;
+}
+.table-responsive{
+    height: 100%;
+}
