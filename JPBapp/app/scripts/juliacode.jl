@@ -1,3 +1,6 @@
+# import Pkg
+# Pkg.add("OffsetArrays")
+
 using OffsetArrays
 using Base.Threads
 
@@ -5,29 +8,30 @@ using Base.Threads
 # Given
 #-----------------------------------------------------------
 # Domain
-const Ax₁, Bx₁ = 0.0, 7000.0
-const Ax₂, Bx₂ = 0.0, 10500.0
+const Ax₁, Bx₁ = 0.0, 100.0
+const Ax₂, Bx₂ = 0.0, 100.0
 const At, Bt = 0.0, 1.0
 
-#const L₁, L₂ = 15.0, 75.0
+const L₁, L₂ = 15.0, 75.0
 
 # Mesh
 const Nx₁, Nx₂ = 400, 400
 const LastTimeLayer = 100000
 
 # Media properties
+
 # const ρ₀sf_porous = 1500.0
 # const ρ₀lf_porous = 1000.0
-# const cp₁_porous = 2100.0
-# const cp₂_porous = 500.0
+# const cp₁_porous = 2000.0
+# const cp₂_porous = 450.0
 # const cs_porous = 1400.0
 # const d₀_porous = 0.2
-
 
 args = ARGS
 # println(args)
 
 # Media properties
+
 const ρ₀sf_porous = parse(Float64, args[1])
 const ρ₀lf_porous = parse(Float64, args[2])
 const cp₁_porous = parse(Float64, args[3])
@@ -35,26 +39,29 @@ const cp₂_porous = parse(Float64, args[4])
 const cs_porous = parse(Float64, args[5])
 const d₀_porous = parse(Float64, args[6])
 
-println(ρ₀sf_porous)
-println(ρ₀lf_porous)
-println(cp₁_porous)
-println(cp₂_porous)
-println(cs_porous)
-println(d₀_porous)
-println(args[7])
+# println(ρ₀sf_porous)
+# println(ρ₀lf_porous)
+# println(cp₁_porous)
+# println(cp₂_porous)
+# println(cs_porous)
+# println(d₀_porous)
+# println(args[7])
 
+const ρ₀sf_elast = 1200.0
+const cp₁_elast = 1400.0
+const cs_elast = 1300.0
 
 const h₁, h₂ = (Bx₁ - Ax₁) / Nx₁, (Bx₂ - Ax₂) / Nx₂
-const Nt = 5*10^5
+const Nl = 20.0
 const γ = 4.0
-const f₀ = 1.0
-const t₀ = 1.5 
+const f₀ = cs_porous / (h₁ * Nl)
+const t₀ = 1.0 / f₀
 const τ = 0.00009 * h₁ / sqrt(2.0 * cp₁_porous)
-const x₁₀, x₂₀ = 3500.0, 1500.0
+const x₁₀, x₂₀ = 50.0, 14.0
 
 function f(t::Float64)
     if t <= 2.0 * t₀
-        exp(-(2*π* f₀ * (t-t₀))^2.0/γ^2)*sin(2.0 * π * f₀ * (t-t₀))
+        -2.0 * π^2.0 * f₀^2.0 * (t-t₀) * exp(-π^2.0 * f₀^2.0 * (t-t₀)^2.0)
     else
         0.0
     end
@@ -108,10 +115,13 @@ const coeff3 = zeros(0 : Nx₂)
 const coeff4 = zeros(0 : Nx₂)
 
 
+const NL₁ = round(Int64, L₁ * Nx₂ / Bx₂)
+const NL₂ = round(Int64, L₂ * Nx₂ / Bx₂)
+
+
 function DefineMediaCoeffs()
     porous_idx = 0 : Nx₂
-    
-
+   
     ρ₀sf[porous_idx] .= ρ₀sf_porous   ;
     ρ₀lf[porous_idx] .= ρ₀lf_porous   ;
     cp₁[porous_idx] .= cp₁_porous     ;
@@ -151,12 +161,13 @@ end
 
 function DefineCoeffs()
     for j in 0 : Nx₂
-        
         coeff1[j] = (ρ₀s[j] * K[j] / ρ₀[j] - 2.0 * μ[j] / 3.0)
         coeff2[j] = ρ₀s[j] * K[j] / ρ₀[j]
         coeff3[j] = -(K[j] - α[j] * ρ₀[j] * ρ₀s[j])
         coeff4[j] = α[j] * ρ₀[j] * ρ₀l[j]
-       
+        # coeff3[j] = α[j] * ρ₀s[j] / ρ₀[j] - K[j]
+        # coeff4[j] = α[j] * ρ₀l[j] / ρ₀[j]
+        
     end
 end
 
@@ -289,11 +300,12 @@ function Integrate()
     end
 end
 
-
 function DumpParaview(n::Int64)
     @assert any(isnan, u₁) == false
 
-    io = open("data/data.$(n).csv", "w")
+    # io = open("data/data.$(n).csv", "w")
+    println("app/scripts/data/data.$(n).csv")
+    io = open("app/scripts/data/data.$(n).csv", "w")
     println(io, "x1,x2,u,v,sigma11,sigma12,sigma22,p")
     @inbounds for i in 0 : Nx₁
         @inbounds for j in 0 : Nx₂
@@ -308,7 +320,6 @@ function DumpParaview(n::Int64)
                     (v₂[i,j-1] + v₂[i,j])^2.0
                 )
             end
-        
             println(io, "$(Ax₁+i*h₁),$(Ax₂+j*h₂),$(u),$(v),$(σ₁₁[i,j]),$(σ₁₂[i,j]),$(σ₂₂[i,j]),$(p[i,j])")
         end
     end
@@ -337,7 +348,7 @@ function Start()
         if n%10000 == 0
             println(n)
         end
-        if n % 1000 == 0 
+        if n % 1000 == 0
             DumpParaview(n)
         end
         DefineRHS(n)
@@ -348,5 +359,4 @@ function Start()
     DumpParaview(LastTimeLayer)
 end
 print(τ)
-
 # Start()

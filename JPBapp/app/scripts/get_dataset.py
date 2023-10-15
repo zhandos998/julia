@@ -16,4 +16,4 @@ def get_dataset_zip():
     output_zip_file = os.getcwd()+'/app/scripts/data.zip'
     zip_folder(folder_to_zip, output_zip_file)
 
-    return '/static/data.zip'
+    return '/static/scripts/data.zip'

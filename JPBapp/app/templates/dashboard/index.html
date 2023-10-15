@@ -6,15 +6,14 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.84.0">
-    <title>Dashboard Template · Bootstrap v5.0</title>
+    <title>KazNU</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
     <link href="https://vjs.zencdn.net/8.5.2/video-js.css" rel="stylesheet" />
 
-    <!-- <link href="css/jquery.tablesorter.pager.css" rel="stylesheet">
-    <link href="css/theme.blue.css" rel="stylesheet"> -->
+
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
 
     {% load static %}
-    <!-- Bootstrap core CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
     <style>
@@ -39,38 +38,36 @@
   </head>
   <body>
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
+  <!-- <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">COMPUTER SCIENSE DEPARTMENT, KazNU</a> -->
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">KazNU</a>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
-  <div class="navbar-nav">
+  <div class="navbar-nav w-100">
+    <a class="navbar-brand col-md-3 col-lg-2 px-3" href="#" style="background-color: initial;
+    box-shadow: none;">COMPUTER SCIENSE DEPARTMENT</a>
     <!-- <div class="nav-item text-nowrap">
       <a class="nav-link px-3" href="#">Sign out</a>
     </div> -->
   </div>
 </header>
-
 <div class="container-fluid">
   <div class="row">
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-      <div class="position-sticky pt-3">
-        <!--  ρ₀sf_porous = 1500.0
-              ρ₀lf_porous = 1000.0
-              cp₁_porous = 2100.0
-              cp₂_porous = 500.0
-              cs_porous = 1400.0
-              d₀_porous = 0.2     -->
-        <form id="form">
+      <div class="position-sticky pt-3" style="overflow-y: scroll; height: 100%;">
+        <form id="form" onsubmit="return false">
           {% csrf_token %}
           <div class="mx-3">
-
-            <h4 class="d-flex mb-1 text-muted">
+            <div id='julia-text'>
+              <span></span>
+            </div>
+            <h5 class="d-flex mb-1 text-muted">
               <span>INPUTS</span>
-            </h4>
+            </h5>
             <ul class="nav flex-column">
               <li class="nav-item">
-                <div class="input-group mb-3">
+                <div class="input-group input-group-sm mb-2">
                   <span class="input-group-text w-25">
                     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
                       <mstyle displaystyle="true" scriptlevel="0">
@@ -98,7 +95,7 @@
                 <label for="p0sf" class="form-label">physical density of the solid matrix</label>
               </li>
               <li class="nav-item">
-                <div class="input-group mb-3">
+                <div class="input-group input-group-sm mb-2">
                   <span class="input-group-text w-25"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
                     <mstyle displaystyle="true" scriptlevel="0">
                       <mrow data-mjx-texclass="ORD">
@@ -125,7 +122,7 @@
                 <label for="p0lf" class="form-label">physical density of the liquid</label>
               </li>
               <li class="nav-item">
-                <div class="input-group mb-3">
+                <div class="input-group input-group-sm mb-2">
                   <span class="input-group-text w-25"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
                     <mstyle displaystyle="true" scriptlevel="0">
                       <mrow data-mjx-texclass="ORD">
@@ -150,7 +147,7 @@
                 <label for="cp1" class="form-label">fast longitudinal wave propagation velocity </label>
               </li>
               <li class="nav-item">
-                <div class="input-group mb-3">
+                <div class="input-group input-group-sm mb-2">
                   <span class="input-group-text w-25"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
                     <mstyle displaystyle="true" scriptlevel="0">
                       <mrow data-mjx-texclass="ORD">
@@ -175,7 +172,7 @@
                 <label for="cp2" class="form-label">a slow longitudinal wave propagation velocity</label>
               </li>
               <li class="nav-item">
-                <div class="input-group mb-3">
+                <div class="input-group input-group-sm mb-2">
                   <span class="input-group-text w-25"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
                     <mstyle displaystyle="true" scriptlevel="0">
                       <mrow data-mjx-texclass="ORD">
@@ -200,7 +197,7 @@
                 
               </li>
               <li class="nav-item">
-                <div class="input-group mb-3">
+                <div class="input-group input-group-sm mb-2">
                   <span class="input-group-text w-25"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
                     <mstyle displaystyle="true" scriptlevel="0">
                       <mrow data-mjx-texclass="ORD">
@@ -210,7 +207,7 @@
                               <msub>
                                 <mi>c</mi>
                                 <mrow data-mjx-texclass="ORD">
-                                  <mn>0</mn>
+                                  <mn>0d</mn>
                                 </mrow>
                               </msub>
                             </mtd>
@@ -223,32 +220,11 @@
                 </div>
                 <label for="cs" class="form-label">porosity</label>
               </li>
-              <li class="nav-item">
-                <div class="input-group mb-3">
-                  <span class="input-group-text w-25"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-                    <mstyle displaystyle="true" scriptlevel="0">
-                      <mrow data-mjx-texclass="ORD">
-                        <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
-                          <mtr>
-                            <mtd>
-                              <msub>
-                                <mi>F</mi>
-                              </msub>
-                            </mtd>
-                          </mtr>
-                        </mtable>
-                      </mrow>
-                    </mstyle>
-                  </math> = </span>
-                  <input type="text" class="form-control" name="f" id="f" value="exp(-(2*π* f₀ * (t-t₀))^2.0/γ^2)*sin(2.0 * π * f₀ * (t-t₀))">
-                </div>
-                <label for="cs" class="form-label">source function</label>
-              </li>
             </ul>
           </div>
         </form>
-        <div class="input-group mb-3 px-3">
-          <button class="form-control text-center" onclick="submit()">
+        <div class="input-group input-group-sm mb-2 px-3">
+          <button id="julia-FDM" type="button" class="form-control text-center" onclick="julia_submit()">
             <div id='FDM-text' style="display: block;">
               Start FDM
             </div>
@@ -258,11 +234,11 @@
           </button>
         </div>
         
-        <h4 class="d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+        <h5 class="d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
           <span>LOGS</span>
-        </h4>
+        </h5>
         <pre id = 'log' class="p-3">
-
+          {{julia_log}}
         </pre>
         
       </div>
@@ -273,21 +249,27 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Dashboard</h1>
         <div class="btn-group me-2 mb-md-0">
-          <button type="button" class="btn btn-sm btn-outline-secondary" onclick="generate_video('u')">
+          <button id="generate-video-u" type="button" class="btn btn-sm btn-outline-secondary" onclick="generate_video('u')">
             <!-- <span data-feather="calendar"></span> -->
               Generate video U
           </button>
-          <button type="button" class="btn btn-sm btn-outline-secondary" onclick="generate_video('v')">
+          <button id="generate-video-v" type="button" class="btn btn-sm btn-outline-secondary" onclick="generate_video('v')">
             <!-- <span data-feather="calendar"></span> -->
               Generate video V
           </button>
         </div>
       </div>
       <div class="row">
-        <div class="col-6">
-          <div class="spinner-border m-auto" style="display: none;" role="status" id='Video-load-u'>
-            <span class="visually-hidden">Loading...</span>
+        <div class="col-12 col-md-6">
+          <div style="height: 70px;">
+            <div id='Video-load-u-text' style="text-align: center;" class="my-2">
+              <span></span>
+            </div>
+            <div class="spinner-border m-auto mb-2" style="display: none;" role="status" id='Video-load-u'>
+              <span class="visually-hidden">Loading...</span>
+            </div>
           </div>
+          
           <video
             id="my-video-u"
             class="video-js"
@@ -297,13 +279,23 @@
             height="100%"
             data-setup='{"fluid": true,"disablePictureInPicture" : true}'
           >
-            <source src="{% static '/output_video_u.mp4' %}" type="video/mp4" />
+          
+            <!-- <source src="file:///C:/github_repositories/julia/JPBapp/app/scripts/output_video_u.mp4" type="video/mp4" /> -->
+            <source src="{{generate_video_u_name}}" type="video/mp4" />
           </video>
         </div>
-        <div class="col-6">
-          <div class="spinner-border m-auto" style="display: none;" role="status" id='Video-load-v'>
-            <span class="visually-hidden">Loading...</span>
+
+
+        <div class="col-12 col-md-6">
+          <div style="height: 70px;">
+            <div id='Video-load-v-text' style="text-align: center;" class="my-2">
+              <span></span>
+            </div>
+            <div class="spinner-border m-auto mb-2" style="display: none;" role="status" id='Video-load-v'>
+              <span class="visually-hidden">Loading...</span>
+            </div>
           </div>
+          
           <video
             id="my-video-v"
             class="video-js"
@@ -313,21 +305,30 @@
             height="100%"
             data-setup='{"fluid": true,"disablePictureInPicture" : true}'
           >
-            <source src="{% static '/output_video_v.mp4' %}" type="video/mp4" />
+          <!-- <source src="file:///C:/github_repositories/julia/JPBapp/app/scripts/output_video_v.mp4" type="video/mp4" /> -->
+
+          <source src="{{generate_video_v_name}}" type="video/mp4" />
           </video>
         </div>
       </div>
 
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-        <h1 class="h2">Results</h1>
+        <!-- <h1 class="h2">Results</h1> -->
         <div class="btn-group me-2 mb-md-0">
-          <div class="spinner-border m-auto" style="display: none;margin-right: 10px!important;" role="status" id='Downloading-load'>
-            <span class="visually-hidden">Loading...</span>
-          </div>
-          <button type="button" class="btn btn-sm btn-outline-secondary" onclick="get_dataset()">
+
+          <button id="get-dataset-zip" type="button" class="btn btn-sm btn-outline-secondary" onclick="get_dataset()">
             <!-- <span data-feather="calendar"></span> -->
               Download zip dataset
           </button>
+          <div class="mx-2">
+            <div id='zip-text' style="text-align: center;" class="my-2">
+              <span></span>
+            </div>
+          </div>
+
+          <div class="spinner-border m-auto" style="display: none;margin-right: 10px!important;" role="status" id='Downloading-load'>
+            <span class="visually-hidden">Loading...</span>
+          </div>
         </div>
       </div>
 
@@ -336,15 +337,15 @@
         <div class="col-6"><button type="button" class="btn btn-outline-primary">Primary</button></div>
       </div> -->
        
-      <div class="table-responsive h-100">
-        <!-- <div class="row"> -->
+      <!-- <div class="table-responsive h-100">
+        <div class="row"> -->
           <!-- <div class="col-3"> -->
             <!-- <select id="data_path" class="form-select h-100" multiple onchange="view_data()"> -->
-            <select id="data_path" class="form-select h-100" multiple>
+            <!-- <select id="data_path" class="form-select h-100" multiple>
               {% for data_file in data_files %}
                 <option value="{{data_folder_path}}\{{data_file}}">{{data_file}}</option>
               {% endfor %}
-            </select>
+            </select> -->
           <!-- </div>
           <div class="col-9"> -->
 
@@ -399,29 +400,12 @@
     <script src="{% static 'js/script.js' %}"></script>
     <script src="https://vjs.zencdn.net/8.5.2/video.min.js"></script>
 
-    <!-- <script src="js/jquery.tablesorter.js"></script>
-    <script src="js/jquery.tablesorter.widgets.js"></script>
-    <script src="js/jquery.tablesorter.pager.js"></script> -->
-    
-    <!-- <script>
-      $(function() {
-          // $("#myTable1").tablesorter();
-          var $table1 = $('#myTable'),
-              pagerOption = {
-                  container: $("#tablesorterpager"),
-                  output: '{startRow} - {endRow} / {filteredRows} ({totalRows})',
-                  removeRows: false,
-                  cssGoto: '.gotoPage'
-              };
-          $table1.tablesorter({
-                  theme: 'blue',
-                  showProcessing: true,
-                  widthFixed: true,
-                  widgets: ['zebra', 'filter', 'scroller']
-              }).tablesorterPager(pagerOption);
-      });
-    </script> -->
-
+    <script>
+      createTimer(timer_u,'timer-u',Date.parse("{{generate_video_u_start}}"),Date.parse("{{generate_video_u_finish}}"));
+      createTimer(timer_v,'timer-v',Date.parse("{{generate_video_v_start}}"),Date.parse("{{generate_video_v_finish}}"));
+      createTimer(timer_julia,'timer-julia',Date.parse("{{julia_start}}"),Date.parse("{{julia_finish}}"));
+      createTimer(timer_zip,'timer-zip',Date.parse("{{download_start}}"),Date.parse("{{download_finish}}"));
+    </script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         var player_u = videojs('my-video-u', {
